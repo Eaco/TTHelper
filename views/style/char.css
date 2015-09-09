@@ -1,0 +1,29 @@
+.mytable{
+	margin-left: 20%;
+	width: 60%;
+}
+.charInput{
+	width: 30%;
+	margin-left: 20%;
+}
+.search{
+	width:20%;
+	margin-left: 20%;
+}
+
+.imageThing{
+    width: 60%;
+    height: auto;
+    margin: auto;
+    margin-top: 2em;
+}
+
+.greyness{
+	width: 60%;
+	height: auto;
+	margin: auto;
+	margin-top: 5em;
+}
+body { 
+	padding-top: 50px;
+}
