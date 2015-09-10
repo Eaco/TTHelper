@@ -32,7 +32,7 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
 
 //------configuration begins here--------
 
-mongoose.connect(configDB.url);         //DB connection
+mongoose.connect(connection_string);         //DB connection
 app.use(express.static(__dirname + '/views'));
 
 require('./config/passport')(passport); // pass passport for configuration
