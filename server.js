@@ -8,6 +8,8 @@ var app         = express();
 var server      = require('http').createServer(app);
 var io          = require('socket.io').listen(server);
 var port        = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var ip_address  = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+
 var mongoose    = require('mongoose');
 var passport    = require('passport');
 var flash       = require('connect-flash');
@@ -55,7 +57,7 @@ app.use(flash());
 
 require('./app/routes.js')(app, passport);
 require('./app/socket.js')(io);                     //adds all that sweet sweet socket logic we all love
-server.listen(port);
+server.listen(port, ip_address);
 console.log('listening on port ' + port);
 
 
