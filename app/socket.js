@@ -78,11 +78,43 @@ module.exports = function(io){
 
                 socket.room = curroom;
                 socket.join(curroom.name);
-                console.log(socket.room.name)
+                console.log(socket.room.name);
                 console.log(curroom.characters);
                 fn(curroom);                        //HOLY CRAP THIS MAKES NO SENSE AT ALL
             });
             //console.log('gone to room: ' + room);
+        });
+
+        socket.on("roomAdded", function(room, user){
+            User.findOne({email:user.email},function(err, foundUser){
+                if(foundUser){
+                    console.log("pushing room to user campaigns: " + room);
+                    Room.findOne({name: room}, function(err, foundRoom){
+                       if(foundRoom){
+                           foundUser.campaigns.push(foundRoom.name);
+                           foundUser.save(function(err){
+                               console.log("campaign added to user:" + foundUser.local.email);
+                           });
+                       }
+                       else
+                       {
+                           var newRoom = Room({name:room});
+                           newRoom.save(function(err){
+                               if(err) throw err;
+
+                               console.log("new room created: " + room);
+                           });
+                           foundUser.campaigns.push(newRoom.name);
+                           foundUser.save(function(err){
+                               console.log("campaign added to user:" + foundUser.local.email);
+                           });
+                       }
+                    });
+                }
+                else{
+                    console.log("uhhhhh..... user not found.....");
+                }
+            })
         });
     })
 };

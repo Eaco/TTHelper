@@ -127,12 +127,13 @@
                 $scope.user = data.username;
                 //$scope.user.campaigns = ["WarHammer","Classic Dnd"];
                 $scope.$apply();
-                console.log("username now: " + $scope.user.local.email)
+                console.log("campaigns: " + $scope.user.campaigns)
             }
         });
 
         this.newRoom;
         this.addRoom = function(){
+            socket.emit("roomAdded", this.newRoom, $scope.user);
             $scope.user.campaigns.push(this.newRoom);
 
            // $scope.$apply();
