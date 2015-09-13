@@ -27,7 +27,7 @@ module.exports = function(app, passport){
     });
 
     app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '/characters', // redirect to the secure profile section
+        successRedirect : '/login', // redirect to the secure profile section
         failureRedirect : '/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
@@ -59,7 +59,7 @@ module.exports = function(app, passport){
             // The user is not logged in
             res.json({});
         } else {
-            console.log('success');
+            console.log(req.user.local.email + " requesting user data");
             res.json({
                 username: req.user
             });

@@ -125,6 +125,14 @@
             if (data.hasOwnProperty('username')) {
                 console.log('it has username: ' + data.username.local.email);
                 $scope.user = data.username;
+
+                if ($scope.user.campaigns.length > 0)
+                {
+                    socket.emit('roomChange', $scope.user.campaigns[0], function(room){
+                        $scope.$emit('roomChanged', room);
+                    });
+                }
+
                 //$scope.user.campaigns = ["WarHammer","Classic Dnd"];
                 $scope.$apply();
                 console.log("campaigns: " + $scope.user.campaigns)

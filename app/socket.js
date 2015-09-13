@@ -42,7 +42,7 @@ module.exports = function(io){
 
         });
         socket.on('characterAdded', function(char){
-            Room.findOne({name: socket.room.name}, function(err, curroom) {
+            Room.findOne({name: socket.room}, function(err, curroom) {
                 if (curroom){
                     curroom.characters.push(char);
                     curroom.save(function(err){
@@ -51,6 +51,7 @@ module.exports = function(io){
                     socket.room = curroom;
                 }
                 else{
+                    curroom = new Room;
                     curroom.characters = [];
                     curroom.characters.push(char);
                     socket.room = curroom;
