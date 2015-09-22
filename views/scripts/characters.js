@@ -28,6 +28,18 @@
         });
 
 
+        $scope.$on('roomChanged', function(event, room){            //crappy thing that needs to be fixed anyway. Fix it someday TODO
+            posts = [];
+            console.log("fixin the posts");
+            room.posts.forEach(function(post){
+                console.log(post);
+                posts.unshift(post);
+            });
+            $scope.$apply();
+
+        });
+
+
     });
 
 
@@ -58,6 +70,22 @@
 
     app.controller('imgController', function ($scope) {
         this.post = posts;
+        socket.on('post', function (post) {
+            console.log('We got a post! ' + post.image);
+            //posts.unshift(post);
+            this.post.unshift(post);
+            $scope.$apply();
+        });
+        $scope.$on('roomChanged', function(event, room){            //crappy thing that needs to be fixed anyway. Fix it someday TODO
+            posts = [];
+            console.log("fixin the posts");
+            room.posts.forEach(function(post){
+                console.log(post);
+                this.post.unshift(post);
+            });
+            $scope.$apply();
+
+        });
 
     });
     app.controller('imageAdder', function ($scope) {
@@ -74,12 +102,8 @@
             console.log('Title is ' + ham.title);
             socket.emit('poster', ham);
         };
-        socket.on('post', function (post) {
-            console.log('We got a post! ' + post.image);
-            posts.unshift(post);
 
-            $scope.$apply();
-        });
+
     });
 
     var posts = [];
@@ -150,6 +174,7 @@
         $('#room').change(function(){
             console.log($scope.user.campaigns);
             socket.emit('roomChange', $('#room').val(), function(room){
+                console.log("woo" + room.posts[0].title);
                 $scope.$emit('roomChanged', room);
             });
             socket.emit('here', $scope.user.local.email);

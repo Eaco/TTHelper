@@ -6,7 +6,8 @@ var mongoose = require('mongoose');
 var roomSchema = mongoose.Schema({
     name            : String,
     characters      : Array,
-    messages        : Array
+    messages        : Array,
+    posts           : Array
 });
 
 

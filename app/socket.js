@@ -38,11 +38,25 @@ module.exports = function(io){
             io.to(socket.room).emit('clearing');
         });
         socket.on('poster', function(post){
+            Room.findOne({name: socket.room.name}, function(err, curroom) {
+                if (curroom){
+                    curroom.posts.push(post);
+                    curroom.save(function(err){
+                        console.log('room updated successfully');
+                    });
+                    socket.room = curroom;
+                }
+                else{
+                    console.log("Room not found to post in")
+                }
+               // console.log(socket.room)
+            });
             console.log('Posting...' + post.image);
+            io.to(socket.room.name).emit('post',post);
 
         });
         socket.on('characterAdded', function(char){
-            Room.findOne({name: socket.room}, function(err, curroom) {
+            Room.findOne({name: socket.room.name}, function(err, curroom) {
                 if (curroom){
                     curroom.characters.push(char);
                     curroom.save(function(err){
@@ -51,6 +65,7 @@ module.exports = function(io){
                     socket.room = curroom;
                 }
                 else{
+                    console.log(socket.room + " was now found")
                     curroom = new Room;
                     curroom.characters = [];
                     curroom.characters.push(char);
