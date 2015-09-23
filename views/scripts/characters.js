@@ -47,12 +47,7 @@
     });
     app.controller('charController', function ($scope) {
         this.characters = chars;
-
-
-
     });
-
-
 
     app.controller('charAdder', function ($scope) {
         this.character = {};
