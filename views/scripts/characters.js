@@ -96,7 +96,7 @@
         this.addImage = function (imageHolder) {
             console.log(this.tempImage);
             var ham = {image: this.tempImage, title: this.tempTitle, text: this.tempText};
-            $scope.post.unshift(ham);
+            //$scope.post.unshift(ham);
             this.tempImage = '';
             this.tempTitle = '';
             this.tempText = '';
