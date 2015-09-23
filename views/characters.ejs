@@ -112,11 +112,10 @@
             </fieldset>
         </form>
     </div>
-    <div ng-repeat="posts in images.post">
+    <div ng-repeat="posts in post">
         <div class="panel panel-default greyness">
             <h2>{{posts.title}}</h2>
             <img class="instaImages" ng-src="{{posts.image}}"/>
-
             <p>{{posts.text}}</p>
         </div>
     </div>

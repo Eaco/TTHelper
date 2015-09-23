@@ -1,19 +1,21 @@
 (function () {
     var app = angular.module('characters', []);
     var socket = io.connect();
-    app.controller('charController', function ($scope) {
-        this.characters = chars;
-        $scope.$on('roomChanged', function(event, room){
+    app.run(function($rootScope){
+        $rootScope.post = posts;
+        $rootScope.$on('roomChanged', function(event, room){
             chars.length = 0;                               //clears the array without breaking angular
             console.log("room changed to: " + room.name);
             console.log("characters now: " + room.characters);
             room.characters.forEach(function(roomchar){
-               chars.push(roomchar);
+                chars.push(roomchar);
             });
-            $scope.$apply();
+
         });
 
-        $scope.$on('roomChanged', function(event, room){            //crappy thing that needs to be fixed anyway. Fix it someday TODO
+
+
+        $rootScope.$on('roomChanged', function(event, room){            //crappy thing that needs to be fixed anyway. Fix it someday TODO
             console.log("MESSAGE TIMEEEE");
             $('#chatbox').empty();
             if(room.messages == null)
@@ -23,21 +25,29 @@
             });
             var chat = document.getElementById("chatbox");
             chat.scrollTop = chat.scrollHeight - chat.clientHeight;
-            $scope.$apply();
+
 
         });
 
 
-        $scope.$on('roomChanged', function(event, room){            //crappy thing that needs to be fixed anyway. Fix it someday TODO
-            posts = [];
+        $rootScope.$on('roomChanged', function(event, room){            //crappy thing that needs to be fixed anyway. Fix it someday TODO
+            $rootScope.post.length = 0;
             console.log("fixin the posts");
             room.posts.forEach(function(post){
                 console.log(post);
-                posts.unshift(post);
+                $rootScope.post.unshift(post);
             });
-            $scope.$apply();
+            $rootScope.$apply();
 
         });
+
+
+
+
+    });
+    app.controller('charController', function ($scope) {
+        this.characters = chars;
+
 
 
     });
@@ -69,23 +79,19 @@
     var messages = [];
 
     app.controller('imgController', function ($scope) {
-        this.post = posts;
-        socket.on('post', function (post) {
-            console.log('We got a post! ' + post.image);
-            //posts.unshift(post);
-            this.post.unshift(post);
-            $scope.$apply();
-        });
-        $scope.$on('roomChanged', function(event, room){            //crappy thing that needs to be fixed anyway. Fix it someday TODO
-            posts = [];
-            console.log("fixin the posts");
-            room.posts.forEach(function(post){
-                console.log(post);
-                this.post.unshift(post);
-            });
-            $scope.$apply();
+        $scope.post = posts;
 
+
+        socket.on('post', function (post) {
+            $scope.post = posts;
+            $scope.post.forEach(function(prost){
+                console.log('*************** \n' + prost.title +prost.image + prost.text + '\n***************')
+            });
+            console.log('We got a post! ' + post.image);
+            $scope.post.unshift(post);
+            $scope.$apply();
         });
+
 
     });
     app.controller('imageAdder', function ($scope) {
@@ -95,7 +101,7 @@
         this.addImage = function (imageHolder) {
             console.log(this.tempImage);
             var ham = {image: this.tempImage, title: this.tempTitle, text: this.tempText};
-            imageHolder.post.unshift(ham);
+            $scope.post.unshift(ham);
             this.tempImage = '';
             this.tempTitle = '';
             this.tempText = '';
@@ -174,7 +180,9 @@
         $('#room').change(function(){
             console.log($scope.user.campaigns);
             socket.emit('roomChange', $('#room').val(), function(room){
-                console.log("woo" + room.posts[0].title);
+                if(room.posts[0] != null)
+                    console.log("woo" + room.posts[0].title);
+
                 $scope.$emit('roomChanged', room);
             });
             socket.emit('here', $scope.user.local.email);
