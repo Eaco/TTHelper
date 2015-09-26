@@ -45,26 +45,14 @@
 <div ng-show="page.currentPage == 1">
     <div class="panel panel-default greyness">
         <table class="table table-bordered table-striped mytable">
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Class
-                </th>
-                <th>
-                    HP
-                </th>
+            <tr >
+                <td ng-repeat="stats in Peeps.stats">
+                    {{stats}}
+                </td>
             </tr>
             <tr ng-repeat="chars in Peeps.characters| filter:search">
-                <td>
-                    {{chars.name}}
-                </td>
-                <td>
-                    {{chars.type}}
-                </td>
-                <td>
-                    {{chars.hp}}
+                <td ng-repeat="stats in chars.stats">
+                    {{stats}}
                 </td>
             </tr>
         </table>
@@ -74,17 +62,9 @@
     <div class="panel panel-default greyness">
         <form name="addChar" ng-controller="charAdder as char" class="charInput" ng-submit="char.addCharacter(Peeps)"
               ng-show="page.currentPage == 1">
-            <fieldset class="form-group">
-                <label for="name">Character name</label>
-                <input class="form-control" type="text" name="name" ng-model="char.character.name">
-            </fieldset>
-            <fieldset class="form-group">
-                <label for="class">Class</label>
-                <input class="form-control" type="text" name="class" ng-model="char.character.type"/>
-            </fieldset>
-            <fieldset>
-                <label for="HP">HP</label>
-                <input class="form-control" type="text" name="HP" ng-model="char.character.hp"/>
+            <fieldset ng-repeat="stats in Peeps.stats" class="form-group">
+                <label for="name">{{stats}}</label>
+                <input class="form-control" type="text" name="name"  ng-model="char.character.stats[$index]">
             </fieldset>
             <fieldset class="form-group">
                 <input type="submit" class="btn btn-primary pull-right" value="Submit Character"/>

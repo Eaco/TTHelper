@@ -2,6 +2,7 @@
     var app = angular.module('characters', []);
     var socket = io.connect();
     app.run(function($rootScope){
+
         $rootScope.post = posts;
         $rootScope.$on('roomChanged', function(event, room){
             chars.length = 0;                               //clears the array without breaking angular
@@ -46,18 +47,17 @@
 
     });
     app.controller('charController', function ($scope) {
-        this.characters = chars;
+        this.stats = ["Name", "Class", "HP"];
+        this.characters = [];
     });
 
     app.controller('charAdder', function ($scope) {
-        this.character = {};
-
+        this.character = chars;
 
         this.addCharacter = function (character) {
-            var char = {name:this.character.name, type:this.character.type, hp: this.character.hp};
-            console.log(char);
-            character.characters.push(char);
-            socket.emit('characterAdded', char);
+            console.log(this.character);
+            character.characters.push(this.character);
+            socket.emit('characterAdded', this.character);
             this.character = {};
             console.log(chars);
         };
@@ -106,6 +106,7 @@
 
 
     });
+
 
     var posts = [];
 
