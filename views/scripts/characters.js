@@ -48,11 +48,11 @@
     });
     app.controller('charController', function ($scope) {
         this.stats = ["Name", "Class", "HP"];
-        this.characters = [];
+        this.characters = chars;
     });
 
     app.controller('charAdder', function ($scope) {
-        this.character = chars;
+        this.character = {}};
 
         this.addCharacter = function (character) {
             console.log(this.character);
