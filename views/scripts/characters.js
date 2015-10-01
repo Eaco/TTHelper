@@ -142,6 +142,7 @@
 
     app.controller('pageController', function () {
         this.currentPage = 0;
+        this.secondarypage = 0;
     });
 
     app.controller('userController', function($scope){

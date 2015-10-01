@@ -27,3 +27,7 @@
 body { 
 	padding-top: 50px;
 }
+.glyphicon {
+	margin-top: 5px;
+	font-size: 30px;
+}
