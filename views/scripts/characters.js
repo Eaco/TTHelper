@@ -5,6 +5,7 @@
 
         $rootScope.post = posts;
         $rootScope.$on('roomChanged', function(event, room){
+            $rootScope.roomname = room.name;
             chars.length = 0;                               //clears the array without breaking angular
             console.log("room changed to: " + room.name);
             console.log("characters now: " + room.characters);

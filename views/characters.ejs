@@ -11,10 +11,10 @@
     <script type="text/javascript" src="scripts/characters.js"></script>
     <title>Characters</title>
 </head>
-<body ng-controller='charController as Peeps' ng-controller="pageController as page"  ng-cloak class="ng-cloak" class="bork">
+<body ng-controller='charController as Peeps' ng-controller="pageController as page"   ng-init="page.secondarypage=0" ng-cloak class="ng-cloak" class="bork">
 <nav class="navbar navbar-default navbar-fixed-top">
     <span class="glyphicon glyphicon-knight" aria-hidden="true"></span>
-    <div class="container" ng-init="page.currentPage=1"  <div ng-show="page.secondarypage == 1">
+    <div class="container" ng-init="page.currentPage=1"  ng-show="page.secondarypage == 1">
         <ul class="nav nav-tabs nav-justified">
             <li role="presentation"><a href ng-click="page.currentPage = 1">Characters</a></li>
             <li role="presentation"><a href ng-click="page.currentPage = 2">MessageBoard</a></li>
@@ -65,6 +65,9 @@
             </div>
         </div>
     </div>
+</div>
+<div ng-show="page.secondarypage == 0">
+    <h1>{{roomname}}</h1>
 </div>
 <div ng-show="page.secondarypage == 1">
     <div ng-show="page.currentPage == 1">
