@@ -66,8 +66,21 @@
         </div>
     </div>
 </div>
-<div ng-show="page.secondarypage == 0">
+<div ng-show="page.secondarypage == 0" ng-controller="descriptionController as description">
     <h1>{{roomname}}</h1>
+    <div ng-show="page.description == 1">
+        <label>Add a description</label>
+        <textarea class="form-control description" id="description-box" rows="3"></textarea>
+        <button class="btn btn-primary" id="description-saver" ng-click="page.description = 0">
+            Save
+        </button>
+    </div>
+    <div ng-show="page.description == 0">
+        <h2>{{des}}</h2>
+    </div>
+    <button class="btn btn-primary bot-left" ng-click="page.description = 1">
+        Add a description
+    </button>
 </div>
 <div ng-show="page.secondarypage == 1">
     <div ng-show="page.currentPage == 1">

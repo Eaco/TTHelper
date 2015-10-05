@@ -39,14 +39,20 @@
                 console.log(post);
                 $rootScope.post.unshift(post);
             });
+
+
+            $rootScope.$on('roomChanged', function(event, room){
+                $rootScope.description = room.description;
+                console.log(room.description);
+            });
+
             $rootScope.$apply();
 
         });
 
-
-
-
     });
+
+
     app.controller('charController', function ($scope) {
         this.stats = ["Name", "Class", "HP"];
         this.characters = chars;
@@ -70,6 +76,15 @@
             $scope.$apply();
         });
     });
+
+    app.controller('descriptionController',function($scope){
+        this.des     = $scope.description;
+        $("#description-saver").click(function(){
+            var des = $('#description-box').val();
+            socket.emit("descriptionUpdate", $scope.roomname, des);
+        })
+    });
+
 
     var chars = [];
     var messages = [];
@@ -144,6 +159,7 @@
     app.controller('pageController', function () {
         this.currentPage = 0;
         this.secondarypage = 0;
+        this.description = 0;
     });
 
     app.controller('userController', function($scope){
@@ -185,6 +201,9 @@
             });
             socket.emit('here', $scope.user.local.email);
         })
+
+
+
     });
 })();
 

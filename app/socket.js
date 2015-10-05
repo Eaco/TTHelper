@@ -133,5 +133,26 @@ module.exports = function(io){
                 }
             })
         });
+
+
+        socket.on('descriptionUpdate', function (room, des) {
+            Room.findOne({name: room}, function(err, foundRoom){
+                if(foundRoom){
+                    foundRoom.description = des;
+                    foundRoom.save(function(err){
+                        console.log("updating room description:" + foundRoom.name);
+                    });
+                }
+                else
+                {
+                    console.log('description could not find room ' + room);
+                }
+            });
+        })
+
+
+
+
+
     })
 };

@@ -31,3 +31,11 @@ body {
 	margin-top: 5px;
 	font-size: 30px;
 }
+.description{
+	width: 60%;
+}
+.bot-left{
+	position: fixed;
+	bottom: 0;
+	right: 0;
+}
