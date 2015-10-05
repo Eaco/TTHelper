@@ -31,6 +31,17 @@
 
         });
 
+        $rootScope.$on('roomChanged', function(event, room){
+            if(room.description!= null){
+                $rootScope.description = room.description;
+            }
+            else{
+                $rootScope.description = "";
+            }
+            console.log("wooooooooooo toots  " + room.description);
+            console.log(room.description);
+            $rootScope.$apply();
+        });
 
         $rootScope.$on('roomChanged', function(event, room){            //crappy thing that needs to be fixed anyway. Fix it someday TODO
             $rootScope.post.length = 0;
@@ -40,11 +51,6 @@
                 $rootScope.post.unshift(post);
             });
 
-
-            $rootScope.$on('roomChanged', function(event, room){
-                $rootScope.description = room.description;
-                console.log(room.description);
-            });
 
             $rootScope.$apply();
 
@@ -78,11 +84,13 @@
     });
 
     app.controller('descriptionController',function($scope){
-        this.des     = $scope.description;
+
         $("#description-saver").click(function(){
-            var des = $('#description-box').val();
-            socket.emit("descriptionUpdate", $scope.roomname, des);
+            $scope.description = $('#description-box').val();
+            socket.emit("descriptionUpdate", $scope.roomname, $scope.description);
         })
+
+
     });
 
 

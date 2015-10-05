@@ -11,7 +11,7 @@
     <script type="text/javascript" src="scripts/characters.js"></script>
     <title>Characters</title>
 </head>
-<body ng-controller='charController as Peeps' ng-controller="pageController as page"   ng-init="page.secondarypage=0" ng-cloak class="ng-cloak" class="bork">
+<body ng-controller='charController as Peeps' ng-controller="pageController as page"  ng-init="page.secondarypage=0; page.description = 0" ng-cloak class="ng-cloak" class="bork">
 <nav class="navbar navbar-default navbar-fixed-top">
     <span class="glyphicon glyphicon-knight" aria-hidden="true"></span>
     <div class="container" ng-init="page.currentPage=1"  ng-show="page.secondarypage == 1">
@@ -66,8 +66,8 @@
         </div>
     </div>
 </div>
-<div ng-show="page.secondarypage == 0" ng-controller="descriptionController as description">
-    <h1>{{roomname}}</h1>
+<div ng-show="page.secondarypage == 0" ng-controller="descriptionController as desc" >
+    <h1 class="center">{{roomname}}</h1>
     <div ng-show="page.description == 1">
         <label>Add a description</label>
         <textarea class="form-control description" id="description-box" rows="3"></textarea>
@@ -76,7 +76,7 @@
         </button>
     </div>
     <div ng-show="page.description == 0">
-        <h2>{{des}}</h2>
+        <p class="center">{{description}}</p>
     </div>
     <button class="btn btn-primary bot-left" ng-click="page.description = 1">
         Add a description
