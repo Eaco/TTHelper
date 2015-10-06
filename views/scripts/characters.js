@@ -33,10 +33,10 @@
 
         $rootScope.$on('roomChanged', function(event, room){
             if(room.description!= null){
-                $rootScope.description = room.description;
+                $rootScope.Descy = room.description;
             }
             else{
-                $rootScope.description = "";
+                $rootScope.Descy = "";
             }
             console.log("wooooooooooo toots  " + room.description);
             console.log(room.description);
@@ -57,6 +57,11 @@
         });
 
     });
+
+    //--------Global variables
+    var chars = [];
+    var messages = [];
+    var scription = "";
 
 
     app.controller('charController', function ($scope) {
@@ -83,19 +88,17 @@
         });
     });
 
-    app.controller('descriptionController',function($scope){
+    app.controller('descriptionController',function($scope, $rootScope){
 
         $("#description-saver").click(function(){
-            $scope.description = $('#description-box').val();
-            socket.emit("descriptionUpdate", $scope.roomname, $scope.description);
-        })
-
-
+            $rootScope.Descy =  $('#description-box').val();
+            $('#description-box').val('');
+            socket.emit("descriptionUpdate", $scope.roomname, $rootScope.Descy);
+        });
     });
 
 
-    var chars = [];
-    var messages = [];
+
 
     app.controller('imgController', function ($scope) {
         $scope.post = posts;
