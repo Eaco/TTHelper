@@ -102,7 +102,7 @@ module.exports = function(io){
         });
 
         socket.on("roomAdded", function(room, user){
-            console.log(JSON.stringify(user));
+            console.log("hey");
             User.findOne({'local.email': user.local.email},function(err, foundUser){
                 if(foundUser){
                    // console.log("pushing room to user " + user.local.email + " campaigns: " + room);

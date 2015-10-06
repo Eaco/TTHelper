@@ -61,7 +61,6 @@
     //--------Global variables
     var chars = [];
     var messages = [];
-    var scription = "";
 
 
     app.controller('charController', function ($scope) {
@@ -196,9 +195,10 @@
 
         this.newRoom;
         this.addRoom = function(){
+            $('#myModal').modal('hide');
+            console.log("lmao")
             socket.emit("roomAdded", this.newRoom, $scope.user);
             $scope.user.campaigns.push(this.newRoom);
-
            // $scope.$apply();
         };
 

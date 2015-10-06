@@ -35,7 +35,7 @@
         </li>
     </ul>
 
-    <select id="room" class="form-control">
+    <select id="room" class="form-control" ng->
         <option ng-repeat="room in user.campaigns" value="{{room}}">{{room}}</option>
     </select>
     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
@@ -58,7 +58,7 @@
                 </div>
                 <div class="modal-footer">
                     <fieldset class="form-group">
-                        <input type="submit" class="btn btn-primary pull-right" value="Add Room" data-dismiss="modal"/>
+                        <input type="submit" class="btn btn-primary pull-right" value="Add Room" />
                     </fieldset>
                     </form>
                 </div>
