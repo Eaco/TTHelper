@@ -11,10 +11,12 @@
     <script type="text/javascript" src="scripts/characters.js"></script>
     <title>Characters</title>
 </head>
-<body ng-controller='charController as Peeps' ng-controller="pageController as page"  ng-init="page.secondarypage=0; page.description = 0" ng-cloak class="ng-cloak" class="bork">
+<body ng-controller='charController as Peeps' ng-controller="pageController as page"
+      ng-init="page.secondarypage=0; page.description = 0" ng-cloak class="ng-cloak" class="bork">
 <nav class="navbar navbar-default navbar-fixed-top">
     <span class="glyphicon glyphicon-knight" aria-hidden="true"></span>
-    <div class="container" ng-init="page.currentPage=1"  ng-show="page.secondarypage == 1">
+
+    <div class="container" ng-init="page.currentPage=1" ng-show="page.secondarypage == 1">
         <ul class="nav nav-tabs nav-justified">
             <li role="presentation"><a href ng-click="page.currentPage = 1">Characters</a></li>
             <li role="presentation"><a href ng-click="page.currentPage = 2">MessageBoard</a></li>
@@ -22,14 +24,14 @@
         </ul>
     </div>
 </nav>
-<div class="col-sm-3 col-md-2 sidebar"  ng-controller="userController as userCon">
+<div class="col-sm-3 col-md-2 sidebar" ng-controller="userController as userCon">
     <strong>email</strong>: {{user.local.email}}
     <!-- Button trigger modal -->
 
     <ul class="nav nav-pills nav-stacked">
-       <li role="presentation">
-           <a href ng-click="page.secondarypage = 0">Intro Page</a>
-       </li>
+        <li role="presentation">
+            <a href ng-click="page.secondarypage = 0">Intro Page</a>
+        </li>
         <li role="presentation">
             <a href ng-click="page.secondarypage = 1">Game Page</a>
         </li>
@@ -46,7 +48,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                 </div>
                 <div class="modal-body">
@@ -58,7 +61,7 @@
                 </div>
                 <div class="modal-footer">
                     <fieldset class="form-group">
-                        <input type="submit" class="btn btn-primary pull-right" value="Add Room" />
+                        <input type="submit" class="btn btn-primary pull-right" value="Add Room"/>
                     </fieldset>
                     </form>
                 </div>
@@ -66,8 +69,9 @@
         </div>
     </div>
 </div>
-<div ng-show="page.secondarypage == 0" ng-controller="descriptionController as desc" >
+<div ng-show="page.secondarypage == 0" ng-controller="descriptionController as desc">
     <h1 class="center">{{roomname}}</h1>
+
     <div ng-show="page.description == 1">
         <label>Add a description</label>
         <textarea class="form-control description" id="description-box" rows="3"></textarea>
@@ -87,7 +91,7 @@
 
         <div class="panel panel-default greyness">
             <table class="table table-bordered table-striped mytable">
-                <tr >
+                <tr>
                     <td ng-repeat="stats in Peeps.stats">
                         {{stats}}
                     </td>
@@ -102,61 +106,91 @@
             <input ng-model="search" name="searcher" class="form-control search"/>
         </div>
         <div class="panel panel-default greyness">
-            <form name="addChar" ng-controller="charAdder as char" class="charInput" ng-submit="char.addCharacter(Peeps)"
+            <form name="addChar" ng-controller="charAdder as char" class="charInput"
+                  ng-submit="char.addCharacter(Peeps)"
                   ng-show="page.currentPage == 1">
                 <fieldset ng-repeat="stats in Peeps.stats" class="form-group">
                     <label for="name">{{stats}}</label>
-                    <input class="form-control" type="text" name="name"  ng-model="char.character.stats[$index]">
+                    <input class="form-control" type="text" name="name" ng-model="char.character.stats[$index]">
                 </fieldset>
                 <fieldset class="form-group">
                     <input type="submit" class="btn btn-primary pull-right" value="Submit Character"/>
                 </fieldset>
-            </form>
-        </div>
-    </div>
-    <div ng-show="page.currentPage == 2" ng-controller="imgController as images">
-        <div class="panel panel-default imageThing">
-            <form name="poster" class="charInput" ng-controller="imageAdder as something"
-                  ng-submit="something.addImage(images)">
-                <fieldset>
-                    <label for="Image">Image Link</label>
-                    <input class="form-control" type="text" name="Image" ng-model="something.tempImage"/>
-                </fieldset>
-                <fieldset>
-                    <label for="Title">Post Title</label>
-                    <input class="form-control" type="text" name="Title" ng-model="something.tempTitle"/>
-                </fieldset>
-                <fieldset>
-                    <label for="Text">Post Content</label>
-                    <input class="form-control" type="text" name="Text" ng-model="something.tempText"/>
-                </fieldset>
-                <fieldset class="form-group">
-                    <input type="submit" class="btn  pull-right" value="Post"/>
-                </fieldset>
-            </form>
-        </div>
-        <div ng-repeat="posts in post">
-            <div class="panel panel-default greyness">
-                <h2>{{posts.title}}</h2>
-                <img class="instaImages" ng-src="{{posts.image}}"/>
-                <p>{{posts.text}}</p>
-            </div>
-        </div>
-        <div id="postBox"></div>
-    </div>
-    <div ng-show="page.currentPage == 3" ng-controller="chatter as chat">
-        <div class="container">
-            <div class="chat" id="chatbox">
-            </div>
-            <form id="watid" action="">
-                <div class="form-group">
-                    <input class="form-control" id="m" autocomplete="off"/>
-                    <button class="btn btn-default btn-lg center">Send</button>
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#StatModal">
+                    Add new stat field
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="StatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">New Stat</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form name="addRoom" class="charInput" ng-submit="userCon.addRoom()"><!-- Hook up modal to new control part-->
+                                    <fieldset class="form-group">
+                                        <label for="name">Add Stat</label>
+                                        <input class="form-control" type="text" name="name" ng-model="">                         <!-- Hook up modal to new control part-->
+                                    </fieldset>
+                            </div>
+                            <div class="modal-footer">
+                                <fieldset class="form-group">
+                                    <input type="submit" class="btn btn-primary pull-right" value="Add"/>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </form>
-            <button class="btn btn-default" id="send" type="button">Clear chat!</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div ng-show="page.currentPage == 2" ng-controller="imgController as images">
+    <div class="panel panel-default imageThing">
+        <form name="poster" class="charInput" ng-controller="imageAdder as something"
+              ng-submit="something.addImage(images)">
+            <fieldset>
+                <label for="Image">Image Link</label>
+                <input class="form-control" type="text" name="Image" ng-model="something.tempImage"/>
+            </fieldset>
+            <fieldset>
+                <label for="Title">Post Title</label>
+                <input class="form-control" type="text" name="Title" ng-model="something.tempTitle"/>
+            </fieldset>
+            <fieldset>
+                <label for="Text">Post Content</label>
+                <input class="form-control" type="text" name="Text" ng-model="something.tempText"/>
+            </fieldset>
+            <fieldset class="form-group">
+                <input type="submit" class="btn  pull-right" value="Post"/>
+            </fieldset>
+        </form>
+    </div>
+    <div ng-repeat="posts in post">
+        <div class="panel panel-default greyness">
+            <h2>{{posts.title}}</h2>
+            <img class="instaImages" ng-src="{{posts.image}}"/>
+
+            <p>{{posts.text}}</p>
         </div>
     </div>
+    <div id="postBox"></div>
+</div>
+<div ng-show="page.currentPage == 3" ng-controller="chatter as chat">
+    <div class="container">
+        <div class="chat" id="chatbox">
+        </div>
+        <form id="watid" action="">
+            <div class="form-group">
+                <input class="form-control" id="m" autocomplete="off"/>
+                <button class="btn btn-default btn-lg center">Send</button>
+            </div>
+        </form>
+        <button class="btn btn-default" id="send" type="button">Clear chat!</button>
+    </div>
+</div>
 </div>
 </body>
 </html>
