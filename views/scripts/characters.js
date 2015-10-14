@@ -30,6 +30,20 @@
 
 
         });
+        $rootScope.$on('roomChanged', function(event, room){
+            $rootScope.stats = [];
+            console.log('updateing stats')
+            if(room.stats){
+                room.stats.forEach(function(stat){
+                    $rootScope.stats.push(stat);
+                });
+            }
+            else
+            {
+                room.stats = [];
+            }
+
+        });
 
         $rootScope.$on('roomChanged', function(event, room){
             if(room.description!= null){
@@ -61,18 +75,30 @@
     //--------Global variables
     var chars = [];
     var messages = [];
+    var stats = ["Name", "Class", "HP"];
 
 
     app.controller('charController', function ($scope) {
-        this.stats = ["Name", "Class", "HP"];
+       //this.stats = $scope.stats;
         this.characters = chars;
+        this.newstat;
+
+        this.addStat = function () {
+            $('#StatModal').modal('hide');
+            console.log("newstats");
+            $scope.stats.push(this.newstat);
+            socket.emit('statAdd', $scope.roomname,this.newstat);
+            this.newstat = "";
+        };
+
     });
 
     app.controller('charAdder', function ($scope) {
         this.character = {};
 
         this.addCharacter = function (character) {
-            console.log(this.character);
+            console.log('adding character')
+            //console.log(this.character);
             character.characters.push(this.character);
             socket.emit('characterAdded', this.character);
             this.character = {};

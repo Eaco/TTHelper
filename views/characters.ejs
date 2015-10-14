@@ -92,7 +92,7 @@
         <div class="panel panel-default greyness">
             <table class="table table-bordered table-striped mytable">
                 <tr>
-                    <td ng-repeat="stats in Peeps.stats">
+                    <td ng-repeat="stats in stats">
                         {{stats}}
                     </td>
                 </tr>
@@ -120,31 +120,31 @@
                     Add new stat field
                 </button>
                 <!-- Modal -->
-                <div class="modal fade" id="StatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">New Stat</h4>
-                            </div>
-                            <div class="modal-body">
-                                <form name="addRoom" class="charInput" ng-submit="userCon.addRoom()"><!-- Hook up modal to new control part-->
-                                    <fieldset class="form-group">
-                                        <label for="name">Add Stat</label>
-                                        <input class="form-control" type="text" name="name" ng-model="">                         <!-- Hook up modal to new control part-->
-                                    </fieldset>
-                            </div>
-                            <div class="modal-footer">
-                                <fieldset class="form-group">
-                                    <input type="submit" class="btn btn-primary pull-right" value="Add"/>
-                                </fieldset>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </div>
         </form>
+        <div class="modal fade" id="StatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">New Stat</h4>
+                </div>
+                <div class="modal-body">
+                    <form name="addRoom" class="charInput" ng-submit="Peeps.addStat()"><!-- Hook up modal to new control part-->
+                        <fieldset class="form-group">
+                            <label for="name">Add Stat</label>
+                            <input class="form-control" type="text" name="name" ng-model="Peeps.newstat">                         <!-- Hook up modal to new control part-->
+                        </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <fieldset class="form-group">
+                        <input type="submit" class="btn btn-primary pull-right" value="Add"/>
+                    </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div ng-show="page.currentPage == 2" ng-controller="imgController as images">

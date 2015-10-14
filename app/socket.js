@@ -134,6 +134,19 @@ module.exports = function(io){
             })
         });
 
+        socket.on('statAdd', function(room, stat){
+            console.log('statAdd');
+            Room.findOne({name: room}, function(err, foundRoom){
+                if(foundRoom){
+                    foundRoom.stats.push(stat);
+                    console.log("saving '" + stat + "' to room")
+                    foundRoom.save(function(err){
+                        console.log('stat added');
+                    });
+                };
+            });
+        });
+
 
         socket.on('descriptionUpdate', function (room, des) {
             Room.findOne({name: room}, function(err, foundRoom){

@@ -8,7 +8,8 @@ var roomSchema = mongoose.Schema({
     characters      : Array,
     messages        : Array,
     posts           : Array,
-    description     : String
+    description     : String,
+    stats           : Array
 });
 
 
