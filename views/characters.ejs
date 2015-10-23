@@ -109,7 +109,7 @@
             <form name="addChar" ng-controller="charAdder as char" class="charInput"
                   ng-submit="char.addCharacter(Peeps)"
                   ng-show="page.currentPage == 1">
-                <fieldset ng-repeat="stats in Peeps.stats" class="form-group">
+                <fieldset ng-repeat="stats in stats" class="form-group">
                     <label for="name">{{stats}}</label>
                     <input class="form-control" type="text" name="name" ng-model="char.character.stats[$index]">
                 </fieldset>
