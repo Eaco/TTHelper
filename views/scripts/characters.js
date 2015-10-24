@@ -223,8 +223,13 @@
         this.addRoom = function(){
             $('#myModal').modal('hide');
             console.log("lmao")
-            socket.emit("roomAdded", this.newRoom, $scope.user);
-            $scope.user.campaigns.push(this.newRoom);
+            if($.inArray(this.newRoom, $scope.user.campaigns)) {
+                socket.emit("roomAdded", this.newRoom, $scope.user);
+                $scope.user.campaigns.push(this.newRoom);
+            }
+            else{
+                console.log("Room Already Exists");
+            }
            // $scope.$apply();
         };
 
@@ -238,9 +243,6 @@
             });
             socket.emit('here', $scope.user.local.email);
         })
-
-
-
     });
 })();
 
