@@ -8,7 +8,7 @@
             $rootScope.roomname = room.name;
             chars.length = 0;                               //clears the array without breaking angular
             console.log("room changed to: " + room.name);
-            console.log("characters now: " + room.characters);
+            //console.log("characters now: " + room.characters);
             room.characters.forEach(function(roomchar){
                 chars.push(roomchar);
             });
@@ -18,7 +18,7 @@
 
 
         $rootScope.$on('roomChanged', function(event, room){            //crappy thing that needs to be fixed anyway. Fix it someday TODO
-            console.log("MESSAGE TIMEEEE");
+            //console.log("MESSAGE TIMEEEE");
             $('#chatbox').empty();
             if(room.messages == null)
                 room.messages = [];
@@ -32,7 +32,7 @@
         });
         $rootScope.$on('roomChanged', function(event, room){
             $rootScope.stats = [];
-            console.log('updateing stats')
+            //console.log('updateing stats')
             if(room.stats){
                 room.stats.forEach(function(stat){
                     $rootScope.stats.push(stat);
@@ -52,16 +52,16 @@
             else{
                 $rootScope.Descy = "";
             }
-            console.log("wooooooooooo toots  " + room.description);
-            console.log(room.description);
+
+            //console.log(room.description);
             $rootScope.$apply();
         });
 
         $rootScope.$on('roomChanged', function(event, room){            //crappy thing that needs to be fixed anyway. Fix it someday TODO
             $rootScope.post.length = 0;
-            console.log("fixin the posts");
+            //console.log("fixin the posts");
             room.posts.forEach(function(post){
-                console.log(post);
+                //console.log(post);
                 $rootScope.post.unshift(post);
             });
 
@@ -85,7 +85,7 @@
 
         this.addStat = function () {
             $('#StatModal').modal('hide');
-            console.log("newstats");
+            //console.log("newstats");
             $scope.stats.push(this.newstat);
             socket.emit('statAdd', $scope.roomname,this.newstat);
             this.newstat = "";
@@ -97,7 +97,7 @@
         this.character = {};
 
         this.addCharacter = function (character) {
-            console.log('adding character')
+            console.log('adding character' + this.character.name);
             //console.log(this.character);
             character.characters.push(this.character);
             socket.emit('characterAdded', this.character);
@@ -108,10 +108,11 @@
 
         socket.on('characterAdded', function(char){
             chars.push(char);
-            console.log(chars);
             $scope.$apply();
         });
     });
+
+
 
     app.controller('descriptionController',function($scope, $rootScope){
 
@@ -133,8 +134,7 @@
             $scope.post = posts;
             $scope.post.forEach(function(prost){
                 console.log('*************** \n' + prost.title +prost.image + prost.text + '\n***************')
-            });
-            console.log('We got a post! ' + post.image);
+            });s
             $scope.post.unshift(post);
             $scope.$apply();
         });
@@ -146,13 +146,11 @@
         this.tempTitle;
         this.tempText;
         this.addImage = function (imageHolder) {
-            console.log(this.tempImage);
             var ham = {image: this.tempImage, title: this.tempTitle, text: this.tempText};
             //$scope.post.unshift(ham);
             this.tempImage = '';
             this.tempTitle = '';
             this.tempText = '';
-            console.log('Title is ' + ham.title);
             socket.emit('poster', ham);
         };
 
@@ -222,7 +220,6 @@
         this.newRoom;
         this.addRoom = function(){
             $('#myModal').modal('hide');
-            //console.log("lmao")
             if($.inArray(this.newRoom, $scope.user.campaigns)) {
                 socket.emit("roomAdded", this.newRoom, $scope.user);
                 $scope.user.campaigns.push(this.newRoom);
@@ -230,14 +227,11 @@
             else{
                 console.log("Room Already Exists");
             }
-           // $scope.$apply();
         };
 
         $('#room').change(function(){
-            //console.log($scope.user.campaigns);
             socket.emit('roomChange', $('#room').val(), function(room){
                 if(room.posts[0] != null)
-                    //console.log("woo" + room.posts[0].title);
 
                 $scope.$emit('roomChanged', room);
             });
