@@ -215,14 +215,14 @@
 
                 //$scope.user.campaigns = ["WarHammer","Classic Dnd"];
                 $scope.$apply();
-                console.log("campaigns: " + $scope.user.campaigns)
+                //console.log("campaigns: " + $scope.user.campaigns)
             }
         });
 
         this.newRoom;
         this.addRoom = function(){
             $('#myModal').modal('hide');
-            console.log("lmao")
+            //console.log("lmao")
             if($.inArray(this.newRoom, $scope.user.campaigns)) {
                 socket.emit("roomAdded", this.newRoom, $scope.user);
                 $scope.user.campaigns.push(this.newRoom);
@@ -234,10 +234,10 @@
         };
 
         $('#room').change(function(){
-            console.log($scope.user.campaigns);
+            //console.log($scope.user.campaigns);
             socket.emit('roomChange', $('#room').val(), function(room){
                 if(room.posts[0] != null)
-                    console.log("woo" + room.posts[0].title);
+                    //console.log("woo" + room.posts[0].title);
 
                 $scope.$emit('roomChanged', room);
             });
