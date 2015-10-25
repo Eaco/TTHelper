@@ -31,6 +31,9 @@ body {
 	margin-top: 5px;
 	font-size: 30px;
 }
+.trashglyph{
+	font-size: 10px;
+}
 .description{
 	width: 60%;
 }

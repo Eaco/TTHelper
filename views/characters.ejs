@@ -88,17 +88,22 @@
 </div>
 <div ng-show="page.secondarypage == 1">
     <div ng-show="page.currentPage == 1">
-
         <div class="panel panel-default greyness">
             <table class="table table-bordered table-striped mytable">
                 <tr>
                     <td ng-repeat="stats in stats">
                         {{stats}}
                     </td>
+                    <td>
+                        Remove
+                    </td>
                 </tr>
                 <tr ng-repeat="chars in Peeps.characters| filter:search">
                     <td ng-repeat="stats in chars.stats">
                         {{stats}}
+                    </td>
+                    <td>
+                        <button type="button" ng-click="Peeps.remove($index)" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash trashglyph" aria-hidden="true"></span></button>
                     </td>
                 </tr>
             </table>

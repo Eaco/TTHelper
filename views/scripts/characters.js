@@ -91,6 +91,13 @@
             this.newstat = "";
         };
 
+        this.remove = function(num){
+            console.log("removing " + num + " from characters");
+            this.characters.splice(num, 1);
+            console.log("socket.emit(removeCharacter, " + $scope.roomname + ", "+ num +");");
+            socket.emit("removeCharacter", $scope.roomname, num);
+        }
+
     });
 
     app.controller('charAdder', function ($scope) {
@@ -134,7 +141,7 @@
             $scope.post = posts;
             $scope.post.forEach(function(prost){
                 console.log('*************** \n' + prost.title +prost.image + prost.text + '\n***************')
-            });s
+            });
             $scope.post.unshift(post);
             $scope.$apply();
         });
@@ -221,7 +228,7 @@
         this.addRoom = function(){
             $('#myModal').modal('hide');
             if($.inArray(this.newRoom, $scope.user.campaigns)) {
-                socket.emit("roomAdded", this.newRoom, $scope.user);
+                socket.emit("roomAdded", this.newRoom, $scope.user);1
                 $scope.user.campaigns.push(this.newRoom);
             }
             else{
@@ -231,8 +238,7 @@
 
         $('#room').change(function(){
             socket.emit('roomChange', $('#room').val(), function(room){
-                if(room.posts[0] != null)
-
+                //if(room.posts[0] != null)
                 $scope.$emit('roomChanged', room);
             });
             socket.emit('here', $scope.user.local.email);

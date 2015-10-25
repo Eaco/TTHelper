@@ -153,7 +153,7 @@ module.exports = function(io){
                 if(foundRoom){
                     foundRoom.description = des;
                     foundRoom.save(function(err){
-                        console.log("updating room description:" + foundRoom.name);
+                        console.log("updating room description: " + foundRoom.name);
                     });
                 }
                 else
@@ -161,7 +161,17 @@ module.exports = function(io){
                     console.log('description could not find room ' + room);
                 }
             });
-        })
+        });
+
+        socket.on('removeCharacter', function(room, num){
+            console.log("Removing character");
+            Room.findOne({name: room}, function(err, foundRoom){
+                foundRoom.characters.splice(num, 1);
+                foundRoom.save(function(err){
+                    console.log("Removing character from room: " + foundRoom.name);
+                });
+            })
+        });
 
 
 
