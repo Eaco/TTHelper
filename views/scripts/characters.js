@@ -229,8 +229,16 @@
         this.addRoom = function(){
             $('#myModal').modal('hide');
             if($.inArray(this.newRoom, $rootScope.user.campaigns)) {
-                socket.emit("roomAdded", this.newRoom, $rootScope.user);1
+                socket.emit("roomAdded", this.newRoom, $rootScope.user);
                 $rootScope.user.campaigns.push(this.newRoom);
+                if($rootScope.user.campaigns.length == 1)
+                {
+                    console.log('doopadoo');
+                    socket.emit('roomChange', this.newRoom, function(room){
+                        //if(room.posts[0] != null)
+                        $scope.$emit('roomChanged', room);
+                    });
+                }
             }
             else{
                 console.log("Room Already Exists");
