@@ -23,7 +23,7 @@
             if(room.messages == null)
                 room.messages = [];
             room.messages.forEach(function(message){
-                $('#chatbox').append($('<p class="message">').text(message));
+                $('#chatbox').append($('<p class="message">').text(message.usr + ":    " +message.msg));
             });
             var chat = document.getElementById("chatbox");
             chat.scrollTop = chat.scrollHeight - chat.clientHeight;
@@ -172,7 +172,7 @@
         //socket.emit('here');
         $('#watid').submit(function () {
             if ($('#m').val().length > 0) {
-                socket.emit('message', $('#m').val());
+                socket.emit('message', {msg : $('#m').val(), usr: $scope.user.local.email});
                 $('#m').val('');
             }
             return false;
@@ -181,10 +181,11 @@
             socket.emit('clear');
         });
         socket.on('message', function (msg) {
+            console.log("getting a message");
             var chat = document.getElementById("chatbox");
             var isAtBottom = (chat.scrollHeight - chat.clientHeight <= chat.scrollTop + 4);
-
-            $('#chatbox').append($('<p class="message">').text(msg));
+            console.log(msg);
+            $('#chatbox').append($('<p class="message">').text(msg.usr + ":    " +msg.msg));
 
             if (isAtBottom) chat.scrollTop = chat.scrollHeight - chat.clientHeight;
         });
@@ -203,33 +204,33 @@
         this.description = 0;
     });
 
-    app.controller('userController', function($scope){
-        $scope.user;
+    app.controller('userController', function($rootScope, $scope){
+        $rootScope.user;
         $.getJSON("/user_data", function(data) {
             // Make sure the data contains the username as expected before using it
             if (data.hasOwnProperty('username')) {
                 console.log('it has username: ' + data.username.local.email);
-                $scope.user = data.username;
+                $rootScope.user = data.username;
 
-                if ($scope.user.campaigns.length > 0)
+                if ($rootScope.user.campaigns.length > 0)
                 {
-                    socket.emit('roomChange', $scope.user.campaigns[0], function(room){
+                    socket.emit('roomChange', $rootScope.user.campaigns[0], function(room){
                         $scope.$emit('roomChanged', room);
                     });
                 }
 
-                //$scope.user.campaigns = ["WarHammer","Classic Dnd"];
+                //$rootScope.user.campaigns = ["WarHammer","Classic Dnd"];
                 $scope.$apply();
-                //console.log("campaigns: " + $scope.user.campaigns)
+                //console.log("campaigns: " + $rootScope.user.campaigns)
             }
         });
 
         this.newRoom;
         this.addRoom = function(){
             $('#myModal').modal('hide');
-            if($.inArray(this.newRoom, $scope.user.campaigns)) {
-                socket.emit("roomAdded", this.newRoom, $scope.user);1
-                $scope.user.campaigns.push(this.newRoom);
+            if($.inArray(this.newRoom, $rootScope.user.campaigns)) {
+                socket.emit("roomAdded", this.newRoom, $rootScope.user);1
+                $rootScope.user.campaigns.push(this.newRoom);
             }
             else{
                 console.log("Room Already Exists");
@@ -241,7 +242,7 @@
                 //if(room.posts[0] != null)
                 $scope.$emit('roomChanged', room);
             });
-            socket.emit('here', $scope.user.local.email);
+            socket.emit('here', $rootScope.user.local.email);
         })
     });
 })();
