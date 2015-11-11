@@ -198,10 +198,23 @@
 
     });
 
+
+
     app.controller('pageController', function () {
         this.currentPage = 0;
         this.secondarypage = 0;
         this.description = 0;
+        this.editPage = 0;
+    });
+
+    app.controller('calendarController', function(){
+        $('#calendar').fullCalendar({
+            dayClick: function(date, jsEvent, view) {
+                console.log('clickerooo');
+                // change the day's background color just for fun
+                $(this).css('background-color', 'red');
+            }
+        });
     });
 
     app.controller('userController', function($rootScope, $scope){
@@ -252,6 +265,7 @@
             });
             socket.emit('here', $rootScope.user.local.email);
         })
+
     });
 })();
 

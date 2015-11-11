@@ -45,6 +45,14 @@ body {
 .center{
 	text-align: center;
 }
-.vert-mid{
+.callie{
+	width: 60%;
+	margin-top: 5em;
+	margin-left: 10%;
+	margin-right: auto;
+	display: inline-block;
 
+}
+.leftyfloat{
+	float: left;
 }
