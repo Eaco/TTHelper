@@ -2,8 +2,8 @@
 <html ng-app="characters">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.css' />
-    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.print.css' />
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.css'/>
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.print.css'/>
     <link rel="stylesheet" type="text/css" href="style/char.css">
     <link rel="stylesheet" type="text/css" href="style/stylicious.css">
     <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
@@ -14,7 +14,7 @@
     <script type="text/javascript" src="scripts/angular.js"></script>
     <script type="text/javascript" src="scripts/characters.js"></script>
     <script>
-        $(function() { // document ready
+        $(function () { // document ready
 
             $('#calendar').fullCalendar({
                 header: {
@@ -24,10 +24,10 @@
                 },
                 defaultDate: '2014-11-12',
                 editable: true,
-                eventClick: function(){
+                eventClick: function () {
                     console.log("gaaaaa");
                 },
-                dayClick: function(){
+                dayClick: function () {
                     console.log("gaaaaa");
                 },
                 eventLimit: true, // allow "more" link when too many events
@@ -153,7 +153,8 @@
 </div>
 <div ng-show="page.secondarypage == 0" ng-controller="descriptionController as desc">
     <h1 class="center">{{roomname}}</h1>
-    <div  id='calendar' class="callie"></div>
+
+    <div id='calendar' class="callie"></div>
 
     <div ng-show="page.description == 1">
         <label>Add a description</label>
@@ -176,6 +177,8 @@
                 <tr>
                     <td ng-repeat="stats in stats">
                         {{stats}}
+                        <button type="button" ng-show="page.editPage == 1" ng-click="Peeps.removeStat($index)"><span
+                                    class="glyphicon glyphicon-trash trashglyph" aria-hidden="true"></span></button>
                     </td>
                     <td>
                         Remove
@@ -186,7 +189,8 @@
                         {{chars.stats[$index]}}
                     </td>
                     <td>
-                        <button type="button" ng-click="Peeps.remove($index)" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash trashglyph" aria-hidden="true"></span></button>
+                        <button type="button" ng-click="Peeps.remove($index)" class="btn btn-default btn-xs"><span
+                                    class="glyphicon glyphicon-trash trashglyph" aria-hidden="true"></span></button>
                     </td>
                 </tr>
             </table>
@@ -210,50 +214,51 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                     aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">New Stat</h4>
+                        <h4 class="modal-title" id="myModalLabel">New Character</h4>
                     </div>
-            <div class="modal-body">
-                <form name="addChar" ng-controller="charAdder as char" class="charInput"
-                      ng-submit="char.addCharacter(Peeps)"
-                      ng-show="page.currentPage == 1">
-                    <fieldset ng-repeat="stats in stats" class="form-group">
-                        <label for="name">{{stats}}</label>
-                        <input class="form-control" type="text" name="name" ng-model="char.character.stats[$index]">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <input type="submit" class="btn btn-primary pull-right" value="Submit Character"/>
-                    </fieldset>
-                </div>
-                    <div class="modal-footer">
-                        <fieldset class="form-group">
-                            <input type="submit" class="btn btn-primary pull-right" value="Add Character"/>
-                        </fieldset>
+                    <div class="modal-body">
+                        <form name="addChar" ng-controller="charAdder as char" class="charInput"
+                              ng-submit="char.addCharacter(Peeps)"
+                              ng-show="page.currentPage == 1">
+                            <fieldset ng-repeat="stats in stats" class="form-group">
+                                <label for="name">{{stats}}</label>
+                                <input class="form-control" type="text" name="name"
+                                       ng-model="char.character.stats[$index]">
+                            </fieldset>
+                            <div>
+                                <div class="modal-footer">
+                                    <fieldset class="form-group">
+                                        <input type="submit" class="btn btn-primary pull-right" value="Add Character"
+                                               data-toggle="modal" data-target="#CharModal"/>
+                                    </fieldset>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="StatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">New Stat</h4>
-                </div>
-                <div class="modal-body">
-                    <form name="addRoom" class="charInput" ng-submit="Peeps.addStat()">
-                        <fieldset class="form-group">
-                            <label for="name">Add Stat</label>
-                            <input class="form-control" type="text" name="name" ng-model="Peeps.newstat">
-                        </fieldset>
-                </div>
-                <div class="modal-footer">
+    </div>
+</div>
+
+<div class="modal fade" id="StatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">New Stat</h4>
+            </div>
+            <div class="modal-body">
+                <form name="addRoom" class="charInput" ng-submit="Peeps.addStat()">
                     <fieldset class="form-group">
-                        <input type="submit" class="btn btn-primary pull-right" value="Add"/>
+                        <label for="name">Add Stat</label>
+                        <input class="form-control" type="text" name="name" ng-model="Peeps.newstat">
                     </fieldset>
-                    </form>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <fieldset class="form-group">
+                    <input type="submit" class="btn btn-primary pull-right" value="Add"/>
+                </fieldset>
+                </form>
             </div>
         </div>
     </div>
@@ -267,18 +272,18 @@
                 <input class="form-control" type="text" name="Image" ng-model="something.tempImage"/>
             </fieldset>
             <fieldset>
-            <fieldset>
-                <label for="Title">Post Title</label>
-                <input class="form-control" type="text" name="Title" ng-model="something.tempTitle"/>
-            </fieldset>
+                <fieldset>
+                    <label for="Title">Post Title</label>
+                    <input class="form-control" type="text" name="Title" ng-model="something.tempTitle"/>
+                </fieldset>
 
-            <fieldset>
-                <label for="Text">Post Content</label>
-                <input class="form-control" type="text" name="Text" ng-model="something.tempText"/>
-            </fieldset>
-            <fieldset class="form-group">
-                <input type="submit" class="btn  pull-right" value="Post"/>
-            </fieldset>
+                <fieldset>
+                    <label for="Text">Post Content</label>
+                    <input class="form-control" type="text" name="Text" ng-model="something.tempText"/>
+                </fieldset>
+                <fieldset class="form-group">
+                    <input type="submit" class="btn  pull-right" value="Post"/>
+                </fieldset>
         </form>
     </div>
     <div ng-repeat="posts in post">
