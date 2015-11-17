@@ -109,7 +109,7 @@
         this.character = {};
 
         this.addCharacter = function (character) {
-            console.log('adding character' + this.character.name);
+            console.log(this.character);
             //console.log(this.character);
             character.characters.push(this.character);
             socket.emit('characterAdded', this.character);

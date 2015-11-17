@@ -36,56 +36,6 @@
                         title: 'All Day Event',
                         start: '2014-11-01'
                     },
-                    {
-                        title: 'Long Event',
-                        start: '2014-11-07',
-                        end: '2014-11-10'
-                    },
-                    {
-                        id: 999,
-                        title: 'Repeating Event',
-                        start: '2014-11-09T16:00:00'
-                    },
-                    {
-                        id: 999,
-                        title: 'Repeating Event',
-                        start: '2014-11-16T16:00:00'
-                    },
-                    {
-                        title: 'Conference',
-                        start: '2014-11-11',
-                        end: '2014-11-13'
-                    },
-                    {
-                        title: 'Meeting',
-                        start: '2014-11-12T10:30:00',
-                        end: '2014-11-12T12:30:00'
-                    },
-                    {
-                        title: 'Lunch',
-                        start: '2014-11-12T12:00:00'
-                    },
-                    {
-                        title: 'Meeting',
-                        start: '2014-11-12T14:30:00'
-                    },
-                    {
-                        title: 'Happy Hour',
-                        start: '2014-11-12T17:30:00'
-                    },
-                    {
-                        title: 'Dinner',
-                        start: '2014-11-12T20:00:00'
-                    },
-                    {
-                        title: 'Birthday Party',
-                        start: '2014-11-13T07:00:00'
-                    },
-                    {
-                        title: 'Click for Google',
-                        url: 'http://google.com/',
-                        start: '2014-11-28'
-                    }
                 ]
             });
 
@@ -171,94 +121,93 @@
     </button>
 </div>
 <div ng-show="page.secondarypage == 1">
-    <div ng-show="page.currentPage == 1">
-        <div class="panel panel-default greyness">
-            <table class="table table-bordered table-striped mytable">
-                <tr>
-                    <td ng-repeat="stats in stats">
-                        {{stats}}
-                        <button type="button" ng-show="page.editPage == 1" ng-click="Peeps.removeStat($index)"><span
-                                    class="glyphicon glyphicon-trash trashglyph" aria-hidden="true"></span></button>
-                    </td>
-                    <td>
-                        Remove
-                    </td>
-                </tr>
-                <tr ng-repeat="chars in Peeps.characters| filter:search">
-                    <td ng-repeat="stats in stats">
-                        {{chars.stats[$index]}}
-                    </td>
-                    <td>
-                        <button type="button" ng-click="Peeps.remove($index)" class="btn btn-default btn-xs"><span
-                                    class="glyphicon glyphicon-trash trashglyph" aria-hidden="true"></span></button>
-                    </td>
-                </tr>
-            </table>
-            <a class="btn btn-default" ng-click="page.editPage = 1" role="button">Edit room</a>
-            <label for="searcher" class="search">Search</label>
-            <input ng-model="search" name="searcher" class="form-control search"/>
-        </div>
-        <div class="panel panel-default greyness">
+<div ng-show="page.currentPage == 1">
+    <div class="panel panel-default greyness">
+        <table class="table table-bordered table-striped mytable">
+            <tr>
+                <td ng-repeat="stats in stats">
+                    {{stats}}
+                    <button type="button" ng-show="page.editPage == 1" ng-click="Peeps.removeStat($index)"><span
+                                class="glyphicon glyphicon-trash trashglyph" aria-hidden="true"></span></button>
+                </td>
+                <td>
+                    Remove
+                </td>
+            </tr>
+            <tr ng-repeat="chars in Peeps.characters| filter:search">
+                <td ng-repeat="stats in stats">
+                    {{chars.stats[stats]}}
+                </td>
+                <td>
+                    <button type="button" ng-click="Peeps.remove($index)" class="btn btn-default btn-xs"><span
+                                class="glyphicon glyphicon-trash trashglyph" aria-hidden="true"></span></button>
+                </td>
+            </tr>
+        </table>
+        <a class="btn btn-default" ng-click="page.editPage = 1" role="button">Edit room</a>
+        <label for="searcher" class="search">Search</label>
+        <input ng-model="search" name="searcher" class="form-control search"/>
+    </div>
+    <div class="panel panel-default greyness">
 
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#StatModal">
-                Add new stat field
-            </button>
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#CharModal">
-                Add new Character
-            </button>
-        </div>
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#StatModal">
+            Add new stat field
+        </button>
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#CharModal">
+            Add new Character
+        </button>
+    </div>
 
-        <div class="modal fade" id="CharModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">New Character</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form name="addChar" ng-controller="charAdder as char" class="charInput"
-                              ng-submit="char.addCharacter(Peeps)"
-                              ng-show="page.currentPage == 1">
-                            <fieldset ng-repeat="stats in stats" class="form-group">
-                                <label for="name">{{stats}}</label>
-                                <input class="form-control" type="text" name="name"
-                                       ng-model="char.character.stats[$index]">
+    <div class="modal fade" id="CharModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">New Character</h4>
+                </div>
+                <div class="modal-body">
+                    <form name="addChar" ng-controller="charAdder as char" class="charInput"
+                          ng-submit="char.addCharacter(Peeps)"
+                          ng-show="page.currentPage == 1">
+                        <fieldset ng-repeat="stats in stats" class="form-group">
+                            <label for="name">{{stats}}</label>
+                            <input class="form-control" type="text" name="name"
+                                   ng-model="char.character.stats[stats]">
+                        </fieldset>
+                        <div class="modal-footer">
+                            <fieldset class="form-group">
+                                <input type="submit" class="btn btn-primary pull-right" value="Add Character"
+                                       data-toggle="modal" data-target="#CharModal"/>
                             </fieldset>
-                            <div>
-                                <div class="modal-footer">
-                                    <fieldset class="form-group">
-                                        <input type="submit" class="btn btn-primary pull-right" value="Add Character"
-                                               data-toggle="modal" data-target="#CharModal"/>
-                                    </fieldset>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="StatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">New Stat</h4>
-            </div>
-            <div class="modal-body">
-                <form name="addRoom" class="charInput" ng-submit="Peeps.addStat()">
+    <div class="modal fade" id="StatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">New Stat</h4>
+                </div>
+                <div class="modal-body">
+                    <form name="addRoom" class="charInput" ng-submit="Peeps.addStat()">
+                        <fieldset class="form-group">
+                            <label for="name">Add Stat</label>
+                            <input class="form-control" type="text" name="name" ng-model="Peeps.newstat">
+                        </fieldset>
+                </div>
+                <div class="modal-footer">
                     <fieldset class="form-group">
-                        <label for="name">Add Stat</label>
-                        <input class="form-control" type="text" name="name" ng-model="Peeps.newstat">
+                        <input type="submit" class="btn btn-primary pull-right" value="Add"/>
                     </fieldset>
-            </div>
-            <div class="modal-footer">
-                <fieldset class="form-group">
-                    <input type="submit" class="btn btn-primary pull-right" value="Add"/>
-                </fieldset>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

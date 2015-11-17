@@ -58,6 +58,7 @@ module.exports = function (io) {
         socket.on('characterAdded', function (char) {
             Room.findOne({name: socket.room.name}, function (err, curroom) {
                 if (curroom) {
+                    console.log(char.stats['0']);
                     curroom.characters.push(char);
                     curroom.save(function (err) {
                         console.log('room updated successfully');
@@ -142,8 +143,7 @@ module.exports = function (io) {
                     foundRoom.save(function (err) {
                         console.log('stat added');
                     });
-                }
-                ;
+                };
             });
         });
 
@@ -175,9 +175,15 @@ module.exports = function (io) {
         socket.on('removeStat', function (room, num) {
             console.log("Removing Stat");
             Room.findOne({name: room}, function (err, foundRoom) {
-                foundRoom.stats.splice(num, 1);
+                var statRemoved = foundRoom.stats[num];
+                foundRoom.characters.forEach(function(char, index, charArray){
+                    delete charArray[index].stats[statRemoved];
+                });
+                foundRoom.stats.splice(num.toString(), 1);
+                console.log(foundRoom.characters);
                 foundRoom.save(function (err) {
                     console.log("Removing Stat from room: " + foundRoom.name);
+                    console.log(foundRoom)
                 });
             });
         });
