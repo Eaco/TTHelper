@@ -109,10 +109,15 @@ module.exports = function (io) {
                     // console.log("pushing room to user " + user.local.email + " campaigns: " + room);
                     Room.findOne({name: room}, function (err, foundRoom) {
                         if (foundRoom) {
-                            foundUser.campaigns.push(foundRoom.name);
-                            foundUser.save(function (err) {
-                                console.log("campaign added to user:" + foundUser.local.email);
-                            });
+                            if(-1 == foundUser.campaigns.indexOf(room)) {
+                                foundUser.campaigns.push(foundRoom.name);
+                                foundUser.save(function (err) {
+                                    console.log("campaign added to user:" + foundUser.local.email);
+                                });
+                            }
+                            else{
+                                console.log("User already has room");
+                            }
                         }
                         else {
                             var newRoom = Room({name: room});
@@ -121,10 +126,15 @@ module.exports = function (io) {
 
                                 console.log("new room created: " + room);
                             });
-                            foundUser.campaigns.push(newRoom.name);
-                            foundUser.save(function (err) {
-                                console.log("campaign added to user:" + foundUser.local.email);
-                            });
+                            if (foundUser.campaigns){
+                                foundUser.campaigns.push(newRoom.name);
+                                foundUser.save(function (err) {
+                                    console.log("campaign added to user:" + foundUser.local.email);
+                                });
+                            }
+                            else{
+                                console.log("Don't ask how, but the user had a room that didn't exist yet")
+                            }
                         }
                     });
                 }
@@ -138,11 +148,16 @@ module.exports = function (io) {
             console.log('statAdd');
             Room.findOne({name: room}, function (err, foundRoom) {
                 if (foundRoom) {
-                    foundRoom.stats.push(stat);
-                    console.log("saving '" + stat + "' to room")
-                    foundRoom.save(function (err) {
-                        console.log('stat added');
-                    });
+                    if(-1 == foundRoom.stats.indexOf(stat)) {
+                        foundRoom.stats.push(stat);
+                        console.log("saving '" + stat + "' to room")
+                        foundRoom.save(function (err) {
+                            console.log('stat added');
+                        });
+                    }
+                    else{
+                        console.log("stat already exists in this room");
+                    }
                 };
             });
         });
@@ -177,7 +192,7 @@ module.exports = function (io) {
             Room.findOne({name: room}, function (err, foundRoom) {
                 var statRemoved = foundRoom.stats[num];
                 foundRoom.characters.forEach(function(char, index, charArray){
-                    delete charArray[index].stats[statRemoved];
+                    charArray[index].stats[statRemoved] = null;
                 });
                 foundRoom.stats.splice(num.toString(), 1);
                 console.log(foundRoom.characters);

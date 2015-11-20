@@ -84,8 +84,13 @@
         this.addStat = function () {
             $('#StatModal').modal('hide');
             //console.log("newstats");
-            $scope.stats.push(this.newstat);
-            socket.emit('statAdd', $scope.roomname, this.newstat);
+            if(-1 == $scope.stats.indexOf(this.newstat)){
+                $scope.stats.push(this.newstat);
+                socket.emit('statAdd', $scope.roomname, this.newstat);
+            }
+            else{
+                console.log("stat already in room")
+            }
             this.newstat = "";
         };
 
@@ -241,7 +246,7 @@
         this.newRoom;
         this.addRoom = function () {
             $('#myModal').modal('hide');
-            if ($.inArray(this.newRoom, $rootScope.user.campaigns)) {
+            if (-1 == $rootScope.user.campaigns.indexOf(this.newRoom)) {
                 socket.emit("roomAdded", this.newRoom, $rootScope.user);
                 $rootScope.user.campaigns.push(this.newRoom);
                 if ($rootScope.user.campaigns.length == 1) {
@@ -253,7 +258,7 @@
                 }
             }
             else {
-                console.log("Room Already Exists");
+                console.log("User has room already");
             }
         };
 
