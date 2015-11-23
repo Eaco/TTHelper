@@ -191,11 +191,15 @@ module.exports = function (io) {
             console.log("Removing Stat");
             Room.findOne({name: room}, function (err, foundRoom) {
                 var statRemoved = foundRoom.stats[num];
+
                 foundRoom.characters.forEach(function(char, index, charArray){
-                    charArray[index].stats[statRemoved] = null;
+                    delete charArray[index].stats[statRemoved];
                 });
+
                 foundRoom.stats.splice(num.toString(), 1);
                 console.log(foundRoom.characters);
+
+                foundRoom.markModified('characters')
                 foundRoom.save(function (err) {
                     console.log("Removing Stat from room: " + foundRoom.name);
                     console.log(foundRoom)
