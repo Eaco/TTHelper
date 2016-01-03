@@ -36,6 +36,10 @@ body {
 }
 .description{
 	width: 60%;
+	margin-left: 20%;
+}
+.descLabel{
+	margin-left: 3%
 }
 .bot-left{
 	position: fixed;

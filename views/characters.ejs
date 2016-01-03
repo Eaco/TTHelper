@@ -13,34 +13,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="scripts/angular.js"></script>
     <script type="text/javascript" src="scripts/characters.js"></script>
-    <script>
-        $(function () { // document ready
-
-            $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-                defaultDate: '2014-11-12',
-                editable: true,
-                eventClick: function () {
-                    console.log("gaaaaa");
-                },
-                dayClick: function () {
-                    console.log("gaaaaa");
-                },
-                eventLimit: true, // allow "more" link when too many events
-                events: [
-                    {
-                        title: 'All Day Event',
-                        start: '2014-11-01'
-                    },
-                ]
-            });
-
-        });
-    </script>
     <title>Characters</title>
 </head>
 <body ng-controller='charController as Peeps' ng-controller="pageController as page"
@@ -104,12 +76,10 @@
 <div ng-show="page.secondarypage == 0" ng-controller="descriptionController as desc">
     <h1 class="center">{{roomname}}</h1>
 
-    <div id='calendar' class="callie"></div>
-
     <div ng-show="page.description == 1">
-        <label>Add a description</label>
+        <label class="descLabel">Add a description</label>
         <textarea class="form-control description" id="description-box" rows="3"></textarea>
-        <button class="btn btn-primary" id="description-saver" ng-click="page.description = 0">
+        <button class="btn btn-primary descLabel" id="description-saver" ng-click="page.description = 0">
             Save
         </button>
     </div>
