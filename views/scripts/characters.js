@@ -2,7 +2,8 @@
     var app = angular.module('characters', []);
     var socket = io.connect();
     app.run(function ($rootScope) {
-
+        console.log('does this happen first?')
+        $rootScope.Descy = 'Welcome to Table Top Helper! To get started add a room using the button on the left.'
         $rootScope.post = posts;
         $rootScope.$on('roomChanged', function (event, room) {
             $rootScope.roomname = room.name;
