@@ -3,7 +3,7 @@
     var socket = io.connect();
     app.run(function ($rootScope) {
         console.log('does this happen first?')
-        $rootScope.Descy = 'Welcome to Table Top Helper! To get started add a room using the button on the left.'
+        $rootScope.Descy = 'Welcome to Table Top Helper! To get started add a room using the button on the left. After that - Hit the game page button!'
         $rootScope.post = posts;
         $rootScope.$on('roomChanged', function (event, room) {
             $rootScope.roomname = room.name;
