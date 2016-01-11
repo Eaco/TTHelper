@@ -13,6 +13,7 @@
 	height:100vh;
 }
 .container{
+	width: 60%;
 	position: absolute;
     top:0;
     bottom: 0;
@@ -33,13 +34,14 @@ form {
     margin: 0 auto;
 }
 .chat{
-	margin-top: 6em;
 	height: 30em;
+	margin: auto;
 	border-radius: 3px;
 	border-color: #A5A5A5;
     border-style: solid;
     background-color: white;
     overflow-y: auto;
+	margin-top: 6em;
 }
 .bork{
 	background-color:  #EDEDED;
