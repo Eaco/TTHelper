@@ -184,25 +184,28 @@
 </div>
 <div ng-show="page.currentPage == 2" ng-controller="imgController as images">
     <div class="panel panel-default imageThing">
+        <h2>New Post</h2>
         <form name="poster" class="charInput" ng-controller="imageAdder as something"
               ng-submit="something.addImage(images)">
+
+            <fieldset>
+                <label for="Title">Post Title</label>
+                <input class="form-control" type="text" name="Title" ng-model="something.tempTitle"/>
+            </fieldset>
+
             <fieldset>
                 <label for="Image">Image Link</label>
                 <input class="form-control" type="text" name="Image" ng-model="something.tempImage"/>
             </fieldset>
-            <fieldset>
-                <fieldset>
-                    <label for="Title">Post Title</label>
-                    <input class="form-control" type="text" name="Title" ng-model="something.tempTitle"/>
-                </fieldset>
 
-                <fieldset>
-                    <label for="Text">Post Content</label>
-                    <input class="form-control" type="text" name="Text" ng-model="something.tempText"/>
-                </fieldset>
-                <fieldset class="form-group">
-                    <input type="submit" class="btn  pull-right" value="Post"/>
-                </fieldset>
+            <fieldset>
+                <label for="Text">Post Content</label>
+                <input class="form-control" type="text" name="Text" ng-model="something.tempText"/>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <input type="submit" class="btn  pull-right" value="Post"/>
+            </fieldset>
         </form>
     </div>
     <div ng-repeat="posts in post">
